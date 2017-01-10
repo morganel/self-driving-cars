@@ -81,3 +81,8 @@ When using the silmulator with highest graphic quality, my laptop struggles and 
 
 ### Images source:
 Check out model.ipynb to see the code that generates the images included in this README.
+
+### Architecture of project:
+- Train model: Run `python model.py`
+- Final model saved weights: model.h5
+- Final model saved architecture: model.json
