@@ -18,7 +18,8 @@ In order to pick the best model and avoid overfitting, 10% of the training datas
 ### Model description:
 I implemented the model described in the NVIDIA paper (http://images.nvidia.com/content/tegra/automotive/images/2016/solutions/pdf/end-to-end-dl-using-px.pdf) in Keras. I used RGB images instead of converting them to YUV since RGB images gave better results.
 
-![alt tag](NVIDIA_model.png)
+![NVIDIA model from paper](NVIDIA_model.png)
+![NVIDIA model implementation in Keras](NVIDIA_model_keras.png)
 
 I used a training generator from Keras in order to generate more random images from the dataset.
 Used AdamOptimizer with learning rate of 10e-4.
