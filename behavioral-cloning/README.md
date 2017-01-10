@@ -31,6 +31,7 @@ I implemented the model described in the [NVIDIA paper](http://images.nvidia.com
 - I used Keras' ModelCheckpoint to save model weights after each epoch. This was useful since I realized that the validation loss was not always better correlated to the performance on the track.
 
 ### Data preparation:
+- I cropped the 20 pixels at the bottom of the image to hide the car and 50 pixels at the top to remove information about the environment such as the sky.
 - I resized the images to 64x200x3 since that's the expected input for the NVIDIA model.
 ![Reshaped image](reshaped_image.png)
 
@@ -70,6 +71,9 @@ For image resized above:
 - Add image rotation
 - Convert image to YUV space
 
+### Running the simulation:
+I updated the drive.py file to make the necessary image transformations to the input image before feeding it to the model: crop top and bottom of image and resize it to 200x64x3.
+
 ### Observations:
 More zigzags at higher speeds
 Track 2: increased throttle to make the car go up the hill
@@ -86,3 +90,5 @@ Check out model.ipynb to see the code that generates the images included in this
 - Train model: Run `python model.py`
 - Final model saved weights: model.h5
 - Final model saved architecture: model.json
+- model.ipynb has the code to generate the graphs
+- model.py is used to generate the steering angles used by the simulator
