@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from keras.preprocessing.image import ImageDataGenerator, img_to_array
+import matplotlib.image as mpimg
 import cv2
 import random
 import pickle
@@ -164,7 +165,6 @@ def valid_batch_generator(data, batch_size):
         yield batch_x, batch_y 
 
 def train_batch_generator(data, batch_size):
-    
     examples_ct = len(data.index)
     batch_ct = int(examples_ct/batch_size)
     
@@ -213,7 +213,6 @@ def train_batch_generator(data, batch_size):
             batch_y[i_batch] = y
             
             sample_id = sample_id + 1
-
         yield batch_x, batch_y 
                               
 batch_size = 256
@@ -229,7 +228,7 @@ valid_generator = valid_batch_generator(
 ######################################################
 # Train model
 ######################################################
-_EPOCHS_ = 2
+_EPOCHS_ = 10
 hist = model.fit_generator(train_generator, validation_data = valid_generator,
                     samples_per_epoch= 28160,
                     nb_val_samples = 1024,
@@ -241,6 +240,13 @@ hist = model.fit_generator(train_generator, validation_data = valid_generator,
 
 hist_history = hist.history
 pickle.dump( hist_history, open( "hist_history.p", "wb" ) )
+
+######################################################
+# Save model
+######################################################
+model_json = model.to_json()
+with open("model.json", "w") as json_file:
+    json_file.write(model_json)
 
 ######################################################
 # Save weights of last epoch's model
