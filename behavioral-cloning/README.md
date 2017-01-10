@@ -57,9 +57,9 @@ Note: validation loss can be lower that the training loss because training inclu
 ### Output of first and secong convoluational layers
 For image resized above:
 - Output of First convolutional layer:
-![Output First Convolutional Layer](steering_angles.png)
+![Output First Convolutional Layer](output_conv1.png)
 - Output of Second convolutional layer:
-![Output Second Convolutional Layer](steering_angles.png)
+![Output Second Convolutional Layer](output_conv2.png)
 
 ### Other data generation tried that did not work:
 - Change brightness
