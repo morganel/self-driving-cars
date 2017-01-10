@@ -9,11 +9,15 @@ Use deep learning to teach a car how to drive using the simulator provided by Ud
 Although it is possible to generate data with the simulator, I wasn't able to drive the car well enough with my laptop keyboard to get good data. Therefore, I used the dataset provided by Udacity.
 Dataset description: images from 3 different cameras placed at the center, left and right of the car and their associated steering angle, throttle and speed.
 
-### Data cleansing:
-Some points in the dataset were recorded with a very low speed. These may be outliers and I decided to remove them.
+### Data analysis:
+- Some points in the dataset were recorded with a very low speed. These may be outliers and I decided to remove them.
+- Uneven distribution of steering angles: there are more sharper left turns in the data set. Also, there is a huge peak around 0, which means that the model may have a bias to go straight. If we include the left and right cameras with an steering angle offset, this can fix the problem.
 
 ### Validation set:
 In order to pick the best model and avoid overfitting, 10% of the training dataset was randomly selected for validation.
+- Total number of examples: 7332
+- Training examples: 6598
+- Validation examples: 734
 
 ### Model description:
 I implemented the model described in the [NVIDIA paper](http://images.nvidia.com/content/tegra/automotive/images/2016/solutions/pdf/end-to-end-dl-using-px.pdf) in Keras. I used the same layers but fed RGB images instead of YUV images since RGB images gave better results.
