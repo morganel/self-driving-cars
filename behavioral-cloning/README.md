@@ -53,6 +53,8 @@ I was able to train the model locally on my MacBook Pro in less than 3 minutes p
 
 Note: validation loss can be lower that the training loss because training includes more data transformation. Validation only includes the 3 cameras without data augmentation (i.e. no horizontal flipping, no random translation etc.). This choice was made so that I could compare the validation loss across different models.
 
+[![Importance of data augmentation](http://img.youtube.com/vi/EfSK5nApej8/0.jpg)](http://www.youtube.com/watch?v=EfSK5nApej8 "Importance of data augmentation")
+
 - Plot of training and validation loss (mean_squared_error)
 ![Training/Validation Loss](training_validation_loss.png)
 
