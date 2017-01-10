@@ -26,6 +26,7 @@ I implemented the model described in the [NVIDIA paper](http://images.nvidia.com
 ![NVIDIA model implementation in Keras](NVIDIA_model_keras.png)
 
 - I used an Adam optimizer with learning rate of 10e-4.
+- Metrics to optimize: minimize mean_squared_error.
 - I used a batch generator in Keras in order to generate more random images from the dataset. 
 - I used Keras' ModelCheckpoint to save model weights after each epoch. This was useful since I realized that the validation loss was not always better correlated to the performance on the track.
 
@@ -51,10 +52,13 @@ I was able to train the model locally on my MacBook Pro in less than 3 minutes p
 
 Note: validation loss can be lower that the training loss because training includes more data transformation. Validation only includes the 3 cameras without data augmentation (i.e. no horizontal flipping, no random translation etc.). This choice was made so that I could compare the validation loss across different models.
 
+- Plot of training and validation loss (mean_squared_error)
 ![Training/Validation Loss](training_validation_loss.png)
+
+- Plot of the steering angles of the car driving on the 1st track using my best model
 ![Steering angles](steering_angles.png)
 
-### Output of first and secong convoluational layers
+### Output of first and second convoluational layers
 For image resized above:
 - Output of First convolutional layer:
 ![Output First Convolutional Layer](output_conv1.png)
