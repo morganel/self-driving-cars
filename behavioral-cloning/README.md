@@ -78,3 +78,6 @@ Some models have lower validation losses but perform poorly on the track.
 Simulator not performing well when other applications are running as well (e.g. training another model)
 When using the silmulator at higher screen resolutions, the model performs as well.
 When using the silmulator with highest graphic quality, my laptop struggles and the model does not perform as well. We could generate random shadows to improve it.
+
+### Images source:
+Check out model.ipynb to see the code that generates the images included in this README.
