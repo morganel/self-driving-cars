@@ -62,7 +62,6 @@ def telemetry(sid, data):
     # The driving model currently just outputs a constant throttle. Feel free to edit this.
     throttle = 0.2
     if float(speed) < 10 and float(speed) > 5:
-        print('throttle more')
         throttle = 0.5
     
     print(steering_angle, throttle)
@@ -92,7 +91,7 @@ if __name__ == '__main__':
         model = model_from_json(jfile.read())
 
     model.compile("adam", "mse")
-    weights_file = args.model.replace('json', 'h5') #'model-0_3-0_008/model-03-v3.h5' #'model-0_3-0_002/model-01.h5' #
+    weights_file = args.model.replace('json', 'h5') 
     model.load_weights(weights_file)
 
     # wrap Flask application with engineio's middleware
