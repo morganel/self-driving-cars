@@ -305,7 +305,7 @@ To help understand what each step does, I added the following images in the vide
 
 - Bottom right left corner: Identified lanes (left lane in green and right lane in red)
 
-- Top right corner: original image and bird-view image.
+- Top right corner: original image and birds-eye view image.
 
 
 |Image from video                                      | 
