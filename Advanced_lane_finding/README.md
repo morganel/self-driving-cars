@@ -87,8 +87,6 @@ Code is in IPython notebook called `P4-Advanced-Lane-Finding.ipynb`.
 #### Step 1. Distortion correction
 I used the camera matrix and distortion coefficients obtained above to correct all images.
 
-Example:
-
 |Original image                                           |  Corrected image |
 |:-------------------------------------------------------:|:-------------------------------------------------------:|
 |![original image][Distortion_correction_original_image]  |  ![corrected image][Distortion_correction_corrected_image]|
@@ -96,6 +94,7 @@ Example:
 #### Step 2. Perspective transform to rectify the image and create bird-eye view.
 
 I used `cv2.getPerspectiveTransform()`.  The `cv2.getPerspectiveTransform()` function takes as inputs source (`vertices`) and destination (`dst`) points.  Below are the values of `vertices` and `dst`.
+
 
 ``` 
 
@@ -138,8 +137,6 @@ Keep image in RGB and select pixels whose values are between
 `lower_white  = np.array([ 200,  200,  200])` and
 `upper_white = np.array([ 255,  255, 255])`.
 
-Example:
-
 |Original image                                           |  Yellow + White binary |
 |:-------------------------------------------------------:|:-------------------------------------------------------:|
 |![original image][masks-original]  |  ![yellow white binary][masks_yellow_white]|
@@ -152,7 +149,6 @@ These 2 binaries were good enough to pass the "Project video". However, it was f
 Using a sobel kernel size of 15, create a binary image where the gradient magnitude is within `(30, 255)` and the gradient direction is within `(0.1,0.8)`.
 This identified lanes properly but also identified vertical changes of color of the road due to road work etc.
 
-Example:
 
 |Original image                                           |  L - gradient magnitude and direction binary |
 |:-------------------------------------------------------:|:-------------------------------------------------------:|
@@ -162,7 +158,6 @@ Example:
 -- Therefore, I added another mask on top of it. I forced the previous binary to also have high values (`(180,  255)`) of V channel from HSV.
 That eliminated the lanes of darker colors that were not really lanes.
 
-Example:
 
 |Original image                                           |  L - gradient magnitude and direction binary AND V threshold |
 |:-------------------------------------------------------:|:-------------------------------------------------------:|
@@ -172,10 +167,11 @@ Example:
 - Union the 3 previously defined masks
 Select pixels that belong to 'White mask' or 'Yellow mask' or 'L channel from HLS: mask using gradient magnitude and direction + V channel from HSV threshold'
 
-Example:
+
 |Original image                                           |  Combined final binary |
 |:-------------------------------------------------------:|:-------------------------------------------------------:|
 |![original image][masks-original]  |  ![final binary][masks_pipeline_result]|
+
 
 ####4. Identify the lane pixels (when we have no idea where the lane is)
 
