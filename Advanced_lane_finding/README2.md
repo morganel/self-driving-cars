@@ -86,9 +86,9 @@ Code is in IPython notebook called `P4-Advanced-Lane-Finding.ipynb`.
 I used the camera matrix and distortion coefficients obtained above to correct all images.
 
 Example:
-Original image                                           |  Corrected image
-:-------------------------------------------------------:|:-------------------------------------------------------:
-![original image][Distortion_correction_original_image]  |  ![corrected image][Distortion_correction_corrected_image]
+Original image                                           |  Corrected image |
+:-------------------------------------------------------:|:-------------------------------------------------------:|
+![original image][Distortion_correction_original_image]  |  ![corrected image][Distortion_correction_corrected_image]|
 
 #### Step 2. Perspective transform to rectify the image and create bird-eye view.
 
@@ -119,7 +119,7 @@ I verified that my perspective transform was working as expected by drawing the 
 
 Original image|  Warped image| Unwarped image| 
 :---------------------------:|:---------------------------:|:---------------------------:
-![original image][birdeye-img-original]  |  ![warped image][birdeye-img-warped] |  ![unwarped image][birdeye-img-unwarped]
+![original image][birdeye-img-original]  |  ![warped image][birdeye-img-warp] |  ![unwarped image][birdeye-img-unwarp]
 
 #### Step 3. Create binary image by using color transforms and gradients
 This resulted in the function `pipeline()` in the 7th cell of the notebook.
