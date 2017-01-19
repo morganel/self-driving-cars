@@ -16,8 +16,8 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[camera-cal-img-test-image]: /camera_cal/calibrationtest.jpg "Calibration Test Image"
-[camera-cal-img-undistorted-image]: /camera_cal/test_undist.jpg "Undistorted Image"
+[camera-cal-img-test-image]: camera_cal/calibrationtest.jpg "Calibration Test Image"
+[camera-cal-img-undistorted-image]: camera_cal/test_undist.jpg "Undistorted Image"
 
 [Distortion_correction_original_image]:test_images/solidWhiteRight.jpg "Distortion_correction_original_image"
 [Distortion_correction_corrected_image]:output_images/undist_solidWhiteRight.jpg "Distortion_correction_corrected_image"
@@ -123,7 +123,7 @@ Original image|  Warped image| Unwarped image|
 ![original image][birdeye-img-original]  |  ![warped image][birdeye-img-warp] |  ![unwarped image][birdeye-img-unwarp]
 
 #### Step 3. Create binary image by using color transforms and gradients
-This resulted in the function `pipeline()` in the 7th cell of the notebook.
+I created the function `pipeline()` for that.
 
 - Yellow binary:
 Convert image to HSV and select pixels whose value is between 
@@ -142,20 +142,22 @@ Example:
 |:-------------------------------------------------------:|:-------------------------------------------------------:|
 |![original image][masks-original]  |  ![yellow white binary][masks_yellow_white]|
 
-These 2 binaries were good enough to pass the "Project video". However, it was failing on the "Challenge video". So I added more binaries:
+These 2 binaries were good enough to pass the "Project video". However, it was failing on the "Challenge video".
 
-- L channel from HLS: binary using gradient magnitude and direction AND the V channel from HSV threshold
+- L channel from HLS: binary using gradient magnitude and direction AND the V channel from HSV threshold:
+
 -- Convert image to HLS space. The L channel seems to identify the lanes properly and does not contain as much noise as the S channel.
 Using a sobel kernel size of 15, create a binary image where the gradient magnitude is within `(30, 255)` and the gradient direction is within `(0.1,0.8)`.
 This identified lanes properly but also identified vertical changes of color of the road due to road work etc.
 
 Example:
+
 |Original image                                           |  L - gradient magnitude and direction binary |
 |:-------------------------------------------------------:|:-------------------------------------------------------:|
 |![original image][masks-original]  |  ![L - gradient magnitude and direction binary][masks_L_Dir_Magn]|
 
 
--- Therefore, I added another mask on top of it. I forced the previous binary to also have high values of V channel from HSV in `(180,  255)`.
+-- Therefore, I added another mask on top of it. I forced the previous binary to also have high values (`(180,  255)`) of V channel from HSV.
 That eliminated the lanes of darker colors that were not really lanes.
 
 Example:
@@ -245,6 +247,7 @@ It is positive if the car is closer to the right lane and negative if it is clos
 #### 1. Adapt lane pixel detection
 
 If we have detected a lane in the previous frames, we know where the lane should be. Therefore, instead of blindly screening the entire image to look for a lane, we can search around the existing lanes.
+`identify_lane_from_existing()` implements the following:
 
 - Divide the image in 10 vertical slices.
 - For each slice:
