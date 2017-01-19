@@ -44,7 +44,7 @@ The goals / steps of this project are the following:
 [fit-poly-fill]: output_images/fit_poly.jpg "Fill polynomial"
 [fit-poly-original-space]: output_images/fit_poly_original_space.jpg "Lanes marked"
 
-[video1]: ./project_video.mp4 "Fit Visual"
+[video-image]: output_images/video-image.jpg "Video image"
 
 ---
 
@@ -164,7 +164,8 @@ That eliminated the lanes of darker colors that were not really lanes.
 |![original image][masks-original]  |  ![L - gradient magnitude and direction binary AND V threshold][masks_L_Dir_Magn_V]|
 
 
-- Union the 3 previously defined masks
+- Union the 3 previously defined masks:
+
 Select pixels that belong to 'White mask' or 'Yellow mask' or 'L channel from HLS: mask using gradient magnitude and direction + V channel from HSV threshold'
 
 
@@ -175,7 +176,7 @@ Select pixels that belong to 'White mask' or 'Yellow mask' or 'L channel from HL
 
 ####4. Identify the lane pixels (when we have no idea where the lane is)
 
-`identify_lane` function.
+`identify_lane` function implements the logic below:
 
 Step 1: 
 Run histogram search on the bottom half of the image to identify the peaks in intensity. 
@@ -191,7 +192,7 @@ Step2: Define mask
 
 - Divide the image vertically in 8 slices. 
 
-- side_ranges will record the x-range of the location of the lane for each of the 8 slices.
+- `side_ranges` will record the x-range of the location of the lane for each of the 8 slices.
 
 - Start the search in the  bottom slice of the image for x-values ranging from `argmax_histogram_side - 50` to `argmax_histogram_side + 50`. Find the x value `avgpoint` that has the highest intensity in that slice. Append `avgpoint - 50` and `avgpoint + 50` to side_ranges. 
 
@@ -203,19 +204,27 @@ Example for right lane:
 ![Lane slices][identify-lane-slices]
 
 Step3:
+
 Extract pixels of the image that are in the mask defined above. These pixels are the lane pixels.
 If there are less than `_MIN_PIXELS_ = 500` pixels in a lane, discard it, since it's not enough to define the lane.
-![Lane pixels][identify-lane-both-lanes-pixels]
+
+|Left and right lanes pixels identified                                      | 
+|:-------------------------------------------------------:|
+|![Lane pixels][identify-lane-both-lanes-pixels]  | 
+
 
 #### 5. Fit lanes with a polynomial
 Use `np.polyfit()` to fit a second order polynomial to the lane pixels identified above.
 
 #### 6. Plot fitted lane back to original space
 1. `draw_lanes_image()` function uses `cv2.fillPoly()` to fill in the region between the lanes defined by the polynomial.
-![Draw region][fit-poly-fill]
 
 2. Unwarp the figure and add it to the original undistorted image
-![Lanes marked on image][fit-poly-original-space]
+
+|Region between identified lanes                                       |  Lanes marked on image |
+|:-------------------------------------------------------:|:-------------------------------------------------------:|
+|![Draw region][fit-poly-fill] |  ![Lanes marked on image][fit-poly-original-space]
+
 
 #### 7. Estimate radius of curvature of each lane and the position of the vehicle with respect to center in the lane
 
@@ -287,6 +296,11 @@ To help understand what each step does, I added the following images in the vide
 
 - Bottom right left corner: Identified lanes (left lane in green and right lane in red)
 - Top right corner: original image and bird-view image.
+
+|Image from video                                      | 
+|:-------------------------------------------------------:|
+|![Lane pixels][video-image]  | 
+
 
 #### 6. Pipeline works great on both project and challenge videos.
 Here's a [link to my project video](project-video-lanes.mp4)
