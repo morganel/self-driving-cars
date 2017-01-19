@@ -201,7 +201,11 @@ Step2: Define mask
 - Iterate over the 8 slices.
 
 Example for right lane:
-![Lane slices][identify-lane-slices]
+
+|Example from right lane                                     | 
+|:-------------------------------------------------------:|
+|![Lane slices][identify-lane-slices]  | 
+
 
 Step3:
 
