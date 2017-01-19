@@ -9,7 +9,7 @@ Use deep learning to help a car drive by providing the steering angle. It uses t
 Although it is possible to generate data with the simulator, I wasn't able to drive the car well enough with my laptop keyboard to get good data. Therefore, I used the dataset provided by Udacity.
 The dataset is composed of the following: 
 - images from 3 different cameras placed at the center, left and right of the car and 
-- their associated steering angle, throttle and speed.
+- their associated steering angle, throttle, brake and speed.
 
 ### Data analysis:
 - Some points in the dataset were recorded with a very low speed. These may be outliers and I decided to remove them.
