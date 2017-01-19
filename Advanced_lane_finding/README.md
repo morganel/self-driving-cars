@@ -232,21 +232,23 @@ Use `np.polyfit()` to fit a second order polynomial to the lane pixels identifie
 
 #### 7. Estimate radius of curvature of each lane and the position of the vehicle with respect to center in the lane
 
-1. To estimate the radius of curvature of each lane in meters, we first have to convert pixels to meters. I estimated the following conversion parameters by looking at the birdview images:
+To estimate the radius of curvature of each lane in meters, we first have to convert pixels to meters. I estimated the following conversion parameters by looking at the birdview images:
 
 `ym_per_pix = 12/720 meters per pixel in y dimension`
+
 `xm_per_pix = 3.7/1000 meters per pixel in x dimension`
 
-2. Refit a second order polynomial `side_fit_cr` to the lane pixels converted to meters using `np.polyfit()`
+- Refit a second order polynomial `side_fit_cr` to the lane pixels converted to meters using `np.polyfit()`
 
-3. `get_curb()`  uses the formula below to calculate the radius of curvature at `y = y_eval` for the 2nd order polynomial `side_fit_cr`:
+- `get_curb()`  uses the formula below to calculate the radius of curvature at `y = y_eval` for the 2nd order polynomial `side_fit_cr`:
+
 `side_curverad_meters = ((1 + (2*side_fit_cr[0]*y_eval + side_fit_cr[1])**2)**1.5) /np.absolute(2*side_fit_cr[0])`
 
 I evaluated it at y_eval in the middle of the image since the values appeared more stable.
 
-4. `get_car_position()` calculates the absolute distance in meters between the center of the car and a given lane (left or right lane).
+- `get_car_position()` calculates the absolute distance in meters between the center of the car and a given lane (left or right lane).
 
-5. `get_car_from_middle()` evaluates the distance in meters between the center of the car and the middle of the lane.
+- `get_car_from_middle()` evaluates the distance in meters between the center of the car and the middle of the lane.
 `distance_left_lane_to_car` and `distance_right_lane_to_car` are calculated using the function `get_car_position()` above.
 The `road_center` is at `(distance_left_lane_to_car + distance_right_lane_to_car)/2`. Therefore, the distance between the car and the center of the road is `road_center - distance_left_lane_to_car`.
 It is positive if the car is closer to the right lane and negative if it is closer to the left.
@@ -262,7 +264,9 @@ If we have detected a lane in the previous frames, we know where the lane should
 
 - Divide the image in 10 vertical slices.
 - For each slice:
+
 -- get the middle y value and use the previous fitted 2nd order polynomial to get the expected x-value of the lane.
+
 -- Look for the lane in a window of +/- 25 pixels around that x-value.
 
 This not only makes the search more efficient, but it also avoids outliers.
@@ -292,14 +296,21 @@ They are re-estimated using the averaged lanes in the function `get_best_curb()`
 
 #### 5. Add plots around video: 
 To help understand what each step does, I added the following images in the video:
+
 - Bottom 4 images:
+
 -- "Yellow/White" = Binary using the yellow and white filters
+
 -- "L magn/dir" = Binary from "L - gradient magnitude and direction"
+
 -- "L magn/dir + V"= Binary from "L - gradient magnitude and direction binary AND V threshold"
+
 -- "Binary Output" = Combination of "Yellow/White" and "L magn/dir + V" binaries
 
 - Bottom right left corner: Identified lanes (left lane in green and right lane in red)
+
 - Top right corner: original image and bird-view image.
+
 
 |Image from video                                      | 
 |:-------------------------------------------------------:|
