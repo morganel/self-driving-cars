@@ -86,9 +86,9 @@ Code is in IPython notebook called `P4-Advanced-Lane-Finding.ipynb`.
 I used the camera matrix and distortion coefficients obtained above to correct all images.
 
 Example:
-Original image                                           |  Corrected image |
-:-------------------------------------------------------:|:-------------------------------------------------------:|
-![original image][Distortion_correction_original_image]  |  ![corrected image][Distortion_correction_corrected_image]|
+|Original image                                           |  Corrected image |
+|:-------------------------------------------------------:|:-------------------------------------------------------:|
+|![original image][Distortion_correction_original_image]  |  ![corrected image][Distortion_correction_corrected_image]|
 
 #### Step 2. Perspective transform to rectify the image and create bird-eye view.
 
@@ -136,8 +136,10 @@ Keep image in RGB and select pixels whose values are between
 `upper_white = np.array([ 255,  255, 255])`.
 
 Example:
-![Yellow and white binary][masks_yellow_white]
-![Original image][masks-original]
+
+|Original image                                           |  Yellow + White binary |
+|:-------------------------------------------------------:|:-------------------------------------------------------:|
+|![original image][masks-original]  |  ![yellow white binary][masks_yellow_white]|
 
 These 2 binaries were good enough to pass the "Project video". However, it was failing on the "Challenge video". So I added more binaries:
 
@@ -147,19 +149,28 @@ Using a sobel kernel size of 15, create a binary image where the gradient magnit
 This identified lanes properly but also identified vertical changes of color of the road due to road work etc.
 
 Example:
-![L - gradient magnitude and direction binary][masks_L_Dir_Magn]
+|Original image                                           |  L - gradient magnitude and direction binary |
+|:-------------------------------------------------------:|:-------------------------------------------------------:|
+|![original image][masks-original]  |  ![L - gradient magnitude and direction binary][masks_L_Dir_Magn]|
+
 
 -- Therefore, I added another mask on top of it. I forced the previous binary to also have high values of V channel from HSV in `(180,  255)`.
 That eliminated the lanes of darker colors that were not really lanes.
 
 Example:
-![L - gradient magnitude and direction binary AND V threshold][masks_L_Dir_Magn_V]
+|Original image                                           |  L - gradient magnitude and direction binary AND V threshold |
+|:-------------------------------------------------------:|:-------------------------------------------------------:|
+|![original image][masks-original]  |  ![L - gradient magnitude and direction binary AND V threshold][masks_L_Dir_Magn_V]|
+
+
 
 - Union the 3 previously defined masks
 Select pixels that belong to 'White mask' or 'Yellow mask' or 'L channel from HLS: mask using gradient magnitude and direction + V channel from HSV threshold'
 
 Example:
-![final binary][masks_pipeline_result]
+|Original image                                           |  Combined final binary |
+|:-------------------------------------------------------:|:-------------------------------------------------------:|
+|![original image][masks-original]  |  ![final binary][masks_pipeline_result]|
 
 ####4. Identify the lane pixels (when we have no idea where the lane is)
 
@@ -168,8 +179,9 @@ Example:
 Step 1: 
 Run histogram search on the bottom half of the image to identify the peaks in intensity. 
 
-![Original image][identify-lane-image]
-![Histogram bottom half][identify-lane-histogram]
+|Original image                                           |  Histogram (bottom-half of the image) |
+|:-------------------------------------------------------:|:-------------------------------------------------------:|
+|![original image][identify-lane-image]  |  ![Histogram bottom half][identify-lane-histogram]|
 
 Identify the highest peak for each lane `argmax_histogram_side`: For left lane, look in the left half of the image and for the right lane, look for the peak in the right half of the image.
 If nothing is detected, do a broader search (100-500 for left lane and 800-1200 for right lane)
@@ -241,9 +253,10 @@ If we have detected a lane in the previous frames, we know where the lane should
 This not only makes the search more efficient, but it also avoids outliers.
 
 Example for right lane:
-![original image][identify-lane-v2-image]
-![mask from existing lanes][identify-lane-v2-mask]
-![identified lane][identify-lane-v2-lane]
+
+Original image|  Mask from existing lanes| Identified lane| 
+:---------------------------:|:---------------------------:|:---------------------------:
+![original image][identify-lane-v2-image]  |  ![mask from existing lanes][identify-lane-v2-mask] |  ![identified lane][identify-lane-v2-lane]
 
 #### 2. Ignore a detected lane in a frame
 There are situations where it is better to discard a detected lane if we believe it is not accurate. We will discard a lane in a frame if:
