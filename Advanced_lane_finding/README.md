@@ -75,9 +75,6 @@ Feed `objpoints` and `imgpoints` to the function `cv2.calibrateCamera()` that re
 #### Test camera calibration on test image
 I tested the distortion coefficients and camera matrix on test image using `cv2.undistort()`. 
 
-![Test image][camera-cal-img-test-image]
-![Undistorted Image][camera-cal-img-undistorted-image]
-
 |Test image                                  |  Corrected Image |
 |:-------------------------------------------------------:|:-------------------------------------------------------:|
 |![Test image][camera-cal-img-test-image]  |  ![Undistorted Image][camera-cal-img-undistorted-image]|
