@@ -78,6 +78,11 @@ I tested the distortion coefficients and camera matrix on test image using `cv2.
 ![Test image][camera-cal-img-test-image]
 ![Undistorted Image][camera-cal-img-undistorted-image]
 
+|Test image                                  |  Corrected Image |
+|:-------------------------------------------------------:|:-------------------------------------------------------:|
+|![Test image][camera-cal-img-test-image]  |  ![Undistorted Image][camera-cal-img-undistorted-image]|
+
+
 ###Pipeline (single images)
 
 Code is in IPython notebook called `P4-Advanced-Lane-Finding.ipynb`.
