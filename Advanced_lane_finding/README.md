@@ -263,11 +263,7 @@ If we have detected a lane in the previous frames, we know where the lane should
 `identify_lane_from_existing()` implements the following:
 
 - Divide the image in 10 vertical slices.
-- For each slice:
-
--- get the middle y value and use the previous fitted 2nd order polynomial to get the expected x-value of the lane.
-
--- Look for the lane in a window of +/- 25 pixels around that x-value.
+- For each slice: get the middle y value and use the previous fitted 2nd order polynomial to get the expected x-value of the lane. Look for the lane in a window of +/- 25 pixels around that x-value.
 
 This not only makes the search more efficient, but it also avoids outliers.
 
@@ -299,13 +295,13 @@ To help understand what each step does, I added the following images in the vide
 
 - Bottom 4 images:
 
--- "Yellow/White" = Binary using the yellow and white filters
+"Yellow/White" = Binary using the yellow and white filters
 
--- "L magn/dir" = Binary from "L - gradient magnitude and direction"
+"L magn/dir" = Binary from "L - gradient magnitude and direction"
 
--- "L magn/dir + V"= Binary from "L - gradient magnitude and direction binary AND V threshold"
+"L magn/dir + V"= Binary from "L - gradient magnitude and direction binary AND V threshold"
 
--- "Binary Output" = Combination of "Yellow/White" and "L magn/dir + V" binaries
+"Binary Output" = Combination of "Yellow/White" and "L magn/dir + V" binaries
 
 - Bottom right left corner: Identified lanes (left lane in green and right lane in red)
 
