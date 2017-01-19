@@ -37,9 +37,9 @@ The goals / steps of this project are the following:
 [identify-lane-slices]: output_images/identify_lane_slices.jpg "Histogram for each slice of the image"
 [identify-lane-both-lanes-pixels]: output_images/identify_lanes_both_lanes_pixels.jpg "Pixels of identified lanes for left and right"
 
-[identify-lane-v2-image]: output_images/identify_lane_v2_birdeyeimage.jpg "Unwarped image"
-[identify-lane-v2-mask]: output_images/identify_lane_v2_existing_mask.jpg "Unwarped image"
-[identify-lane-v2-lane]: output_images/identify_lane_v2_identified_lane.jpg "Unwarped image"
+[identify-lane-v2-image]: output_images/identify_lane_v2_birdeyeimage.jpg "Original image"
+[identify-lane-v2-mask]: output_images/identify_lane_v2_existing_mask.jpg "Mask from existing lanes"
+[identify-lane-v2-lane]: output_images/identify_lane_v2_identified_lane.jpg "Identified lane"
 
 [fit-poly-fill]: output_images/fit_poly.jpg "Fill polynomial"
 [fit-poly-original-space]: output_images/fit_poly_original_space.jpg "Lanes marked"
@@ -80,14 +80,16 @@ I tested the distortion coefficients and camera matrix on test image using `cv2.
 
 ###Pipeline (single images)
 
-Code is in IPython notebook called `P4-Copy2.ipynb`.
+Code is in IPython notebook called `P4-Advanced-Lane-Finding.ipynb`.
 
 #### Step 1. Distortion correction
 I used the camera matrix and distortion coefficients obtained above to correct all images.
 
 Example:
-![alt text][Distortion_correction_original_image]
-![alt text][Distortion_correction_corrected_image]
+
+|Original image                                           |  Corrected image |
+|:-------------------------------------------------------:|:-------------------------------------------------------:|
+|![original image][Distortion_correction_original_image]  |  ![corrected image][Distortion_correction_corrected_image]|
 
 #### Step 2. Perspective transform to rectify the image and create bird-eye view.
 
@@ -116,9 +118,9 @@ This resulted in the following source and destination points:
 
 I verified that my perspective transform was working as expected by drawing the `vertices` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image. I also made sure that I could unwarp the image.
 
-![original image][birdeye-img-original]
-![warped image][birdeye-img-warped]
-![unwarped image][birdeye-img-unwarped]
+Original image|  Warped image| Unwarped image| 
+:---------------------------:|:---------------------------:|:---------------------------:
+![original image][birdeye-img-original]  |  ![warped image][birdeye-img-warp] |  ![unwarped image][birdeye-img-unwarp]
 
 #### Step 3. Create binary image by using color transforms and gradients
 This resulted in the function `pipeline()` in the 7th cell of the notebook.
@@ -135,8 +137,10 @@ Keep image in RGB and select pixels whose values are between
 `upper_white = np.array([ 255,  255, 255])`.
 
 Example:
-![Yellow and white binary][masks_yellow_white]
-![Original image][masks-original]
+
+|Original image                                           |  Yellow + White binary |
+|:-------------------------------------------------------:|:-------------------------------------------------------:|
+|![original image][masks-original]  |  ![yellow white binary][masks_yellow_white]|
 
 These 2 binaries were good enough to pass the "Project video". However, it was failing on the "Challenge video". So I added more binaries:
 
@@ -146,19 +150,28 @@ Using a sobel kernel size of 15, create a binary image where the gradient magnit
 This identified lanes properly but also identified vertical changes of color of the road due to road work etc.
 
 Example:
-![L - gradient magnitude and direction binary][masks_L_Dir_Magn]
+|Original image                                           |  L - gradient magnitude and direction binary |
+|:-------------------------------------------------------:|:-------------------------------------------------------:|
+|![original image][masks-original]  |  ![L - gradient magnitude and direction binary][masks_L_Dir_Magn]|
+
 
 -- Therefore, I added another mask on top of it. I forced the previous binary to also have high values of V channel from HSV in `(180,  255)`.
 That eliminated the lanes of darker colors that were not really lanes.
 
 Example:
-![L - gradient magnitude and direction binary AND V threshold][masks_L_Dir_Magn_V]
+
+|Original image                                           |  L - gradient magnitude and direction binary AND V threshold |
+|:-------------------------------------------------------:|:-------------------------------------------------------:|
+|![original image][masks-original]  |  ![L - gradient magnitude and direction binary AND V threshold][masks_L_Dir_Magn_V]|
+
 
 - Union the 3 previously defined masks
 Select pixels that belong to 'White mask' or 'Yellow mask' or 'L channel from HLS: mask using gradient magnitude and direction + V channel from HSV threshold'
 
 Example:
-![final binary][masks_pipeline_result]
+|Original image                                           |  Combined final binary |
+|:-------------------------------------------------------:|:-------------------------------------------------------:|
+|![original image][masks-original]  |  ![final binary][masks_pipeline_result]|
 
 ####4. Identify the lane pixels (when we have no idea where the lane is)
 
@@ -167,8 +180,9 @@ Example:
 Step 1: 
 Run histogram search on the bottom half of the image to identify the peaks in intensity. 
 
-![Original image][identify-lane-image]
-![Histogram bottom half][identify-lane-histogram]
+|Original image                                           |  Histogram (bottom-half of the image) |
+|:-------------------------------------------------------:|:-------------------------------------------------------:|
+|![original image][identify-lane-image]  |  ![Histogram bottom half][identify-lane-histogram]|
 
 Identify the highest peak for each lane `argmax_histogram_side`: For left lane, look in the left half of the image and for the right lane, look for the peak in the right half of the image.
 If nothing is detected, do a broader search (100-500 for left lane and 800-1200 for right lane)
@@ -184,6 +198,7 @@ Step2: Define mask
 - Move to the next slice (up) and find the new x value `avgpoint` that has the highest intensity in that slice (for x-values between `previousAvgpoint - 50` and `previousAvgpoint + 50`). 
 
 - Iterate over the 8 slices.
+
 Example for right lane:
 ![Lane slices][identify-lane-slices]
 
@@ -238,6 +253,12 @@ If we have detected a lane in the previous frames, we know where the lane should
 
 This not only makes the search more efficient, but it also avoids outliers.
 
+Example for right lane:
+
+Original image|  Mask from existing lanes| Identified lane| 
+:---------------------------:|:---------------------------:|:---------------------------:
+![original image][identify-lane-v2-image]  |  ![mask from existing lanes][identify-lane-v2-mask] |  ![identified lane][identify-lane-v2-lane]
+
 #### 2. Ignore a detected lane in a frame
 There are situations where it is better to discard a detected lane if we believe it is not accurate. We will discard a lane in a frame if:
 - the newly detected lane is too different from the existing ones i.e. the distance between the first fit coefficient and the current best fit coefficient is greater than 0.05%.
@@ -267,5 +288,5 @@ To help understand what each step does, I added the following images in the vide
 - Top right corner: original image and bird-view image.
 
 #### 6. Pipeline works great on both project and challenge videos.
-Here's a [link to my project video](project_video_lanes.mp4)
-Here's a [link to my challenge video](challenge_video_lanes.mp4)
+Here's a [link to my project video](project-video-lanes.mp4)
+Here's a [link to my challenge video](challenge-video-lanes.mp4)
