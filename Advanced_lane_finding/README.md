@@ -316,3 +316,7 @@ To help understand what each step does, I added the following images in the vide
 #### 6. Pipeline works great on both project and challenge videos.
 Here's a [link to my project video](project-video-lanes.mp4)
 Here's a [link to my challenge video](challenge-video-lanes.mp4)
+
+---
+
+The current pipeline does not work on the harder challenge. Better binaries should be created and, as the turns are very sharp, maybe a higher order polynomial should be fit.
