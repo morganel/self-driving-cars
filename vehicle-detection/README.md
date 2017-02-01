@@ -1,15 +1,23 @@
 ##Vehicle Detection Project
 
 [//]: # (Image References)
+[example_final]: examples/examplefinal.png
 [img_car_not_car]: examples/car_not_car.png
-[ycrcb]: examples/ycrcb.png.jpg
+[ycrcb]: examples/ycrcb.png
 [img_features]: examples/img_features.png
 [sliding_windows]: examples/sliding_windows.png
 [detected_boxes]: examples/detected_boxes.png
-[heatmapcontours]: /examples/heatmapcontours.png
-[falsepositive]: /examples/falsepositive.png
+[heatmapcontours]: examples/heatmapcontours.png
+[falsepositive]: examples/falsepositive.png
 
 [video]: project-video-output-with-lanes.mp4
+
+---
+Goal of the project:
+
+Detect other vehicles on the road, using images from the camera mounted on the front of the car.
+
+![example_final][example_final]
 
 ---
 
