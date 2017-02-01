@@ -1,7 +1,7 @@
 ##Vehicle Detection Project
 
 [//]: # (Image References)
-[example_final]: examples/examplefinal.png
+[example_final]: examples/example_final.png
 [img_car_not_car]: examples/car_not_car.png
 [ycrcb]: examples/ycrcb.png
 [img_features]: examples/img_features.png
@@ -246,9 +246,7 @@ It uses the distorted image to detect the vehicles and draws the rectangles on t
 
 ---
 
-###Discussion
-
-####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
+## Discussion and next steps
 
 The approach I took is very sensitive to the parameters such as window sizes, overlap, heatmap binary threshold, number of frames to consider in the heatmap. I picked them so that there is a limited number of false-positives. My approach works well on the project video but, when I tried to run it on undistorted images (so that I could overlay the lanes), some false-positives appeared.
 
